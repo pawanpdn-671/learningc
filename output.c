@@ -18,7 +18,7 @@ int main()
     }
     return 0;
 }
-int ror(int arr)
+int ror(int arr[])
 {
-    
+    return 0;
 }
