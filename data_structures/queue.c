@@ -8,15 +8,15 @@ int main()
     int choice,x;
     printf("Enter the number of the element on the queue : ");
     scanf(" %d",&no);
-    printf("\nEnter your choice : ");
-    scanf("%d",&choice);
     while(choice!=0)
     {    
         printf("1. Insert the element\n");
         printf("2. Delete an element from the Queue\n");
         printf("3. Print the Queue\n");
         printf("Press 0 to exit\n");
+        printf("\nEnter your choice : ");
         scanf("%d",&choice);
+        
         switch(choice)
         {
             case 1: printf("Enter the element to insert : ");
