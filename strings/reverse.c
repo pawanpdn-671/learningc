@@ -7,8 +7,9 @@ int main()
     printf("Enter Any word : ");
     scanf("%s",s);
     for(i=0;s[i]!='\0';i++){
-        len+=i;
+        len=len+1;
     }
+    
     printf("The reverse of the word is ");
     for(j=len-1;j>=0;j--)
     {
