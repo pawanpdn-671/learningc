@@ -46,34 +46,29 @@ int main()
                 case 3:
                         printf("\nEnter the number you want to delete : ");
                         scanf("%d",&key1); 
-                        output=deleteNode(bstroot,key1);
-                        if(output->data>0)
+                        d=search(bstroot,key1);
+                        if(d==key1)
                         {
-                                printf("\nThe element is successfully deleted");
+                                deleteNode(bstroot,key1);
+                                printf("\nThe given number(%d) is successfully deleted !",key1);
                         }
-                        
-                        else if(output->data==0)
+                        else
                         {
-                                printf("\nThe tree is empty, no element to delete .");
+                                printf("\nElement not found !");
                         }
-                        else 
-                        {
-                                printf("\nElement cannot be found to delete, Please enter a valid element .");
-                        }
-
                         break;
 
                 case 4:
                         printf("\nEnter the number you want to search : ");
                         scanf("%d",&key2);
                         d=search(bstroot, key2);
-                        if(d==0)
+                        if(d==key2)
                         {
-                                printf("\nElement not found ");
+                                printf("\n%d is found successfully !",key2);
                         }
                         else
                         {
-                                printf("\n%d is found successfully !",key2);
+                                printf("\nElement not found ");
                         }
                         break;
 
@@ -168,7 +163,7 @@ struct Node *deleteNode(struct Node *bstroot, int key)
 
         if(bstroot==NULL)
         {
-                return 0;
+                return bstroot;
         }
         else if(key<bstroot->data)
         {
@@ -211,7 +206,7 @@ int search(struct Node *bstroot,int key)
         }
         else if(key==bstroot->data)
         {
-                return 1;
+                return key;
         }
         else if(key<bstroot->data)
         {
