@@ -12,13 +12,16 @@ struct Node *bstroot;
 
 void createList();
 void insertNode();
-void deleteNode();
-void search();
+struct Node *deleteNode(struct Node *bstroot, int key);
+int search(struct Node *bstroot, int key);
 void printTree();
+struct Node* minValueNode(struct Node* leftmostN);
 
 int main()
 {
-        int choice;
+        int choice,key1,key2,d;
+        struct Node *output;
+        
         while (choice != 0)
         {
                 printf("\n\n--------------------MAIN MENU--------------------\n");
@@ -41,11 +44,37 @@ int main()
                         break;
 
                 case 3:
-                        deleteNode();
+                        printf("\nEnter the number you want to delete : ");
+                        scanf("%d",&key1); 
+                        output=deleteNode(bstroot,key1);
+                        if(output->data>0)
+                        {
+                                printf("\nThe element is successfully deleted");
+                        }
+                        
+                        else if(output->data==0)
+                        {
+                                printf("\nThe tree is empty, no element to delete .");
+                        }
+                        else 
+                        {
+                                printf("\nElement cannot be found to delete, Please enter a valid element .");
+                        }
+
                         break;
 
                 case 4:
-                        search();
+                        printf("\nEnter the number you want to search : ");
+                        scanf("%d",&key2);
+                        d=search(bstroot, key2);
+                        if(d==0)
+                        {
+                                printf("\nElement not found ");
+                        }
+                        else
+                        {
+                                printf("\n%d is found successfully !",key2);
+                        }
                         break;
 
                 case 5:
@@ -129,60 +158,86 @@ void insertNode()
 
                 }
         }
+
 }
 
-void deleteNode()
+struct Node *deleteNode(struct Node *bstroot, int key)
 {
-        struct Node *ptr, *leafnode;
-        leafnode=bstroot;
+        struct Node *ptr;
+        
+
         if(bstroot==NULL)
         {
-                printf("\nThere is no element to delete !");
+                return 0;
         }
-
+        else if(key<bstroot->data)
+        {
+                bstroot->left=deleteNode(bstroot->left,key);
+        }
+        else if(key>bstroot->data)
+        {
+                bstroot->right=deleteNode(bstroot->right,key);
+        }
         else
         {
-                if(bstroot->left==NULL&&bstroot->right==NULL)
+                if(bstroot->left==NULL)
                 {
-                        bstroot=NULL;
-                        printf("\n The element is deleted successfully !");
+                        ptr=bstroot->right;
+                        free(bstroot);
+                        return ptr;
+                }
+                else if(bstroot->right==NULL)
+                {
+                        ptr=bstroot->left;
+                        free(bstroot);
+                        return ptr;
                 }
                 else
                 {
-                        while(leafnode->left!=NULL&&leafnode->right!=NULL)
-                        {
-                                ptr=leafnode;
-                                if(leafnode->left!=NULL)
-                                {
-                                        leafnode=leafnode->left;
-                                }
-                                else
-                                {
-                                        leafnode=leafnode->right;
-                                }
-                        }
-                        if(ptr->left==leafnode)
-                        {
-                                ptr->left=NULL;
-                                free(leafnode);
-                        }
-                        else
-                        {
-                                ptr->right=NULL;
-                                free(leafnode);
-                        }
-                        
-                        printf("\nThe element is deleted successfully ");
+                        ptr=minValueNode(bstroot->right);
+                        bstroot->data=ptr->data;
+                        bstroot->right=deleteNode(bstroot->right,ptr->data);
                 }
         }
+        return bstroot;
+        
 }
 
-void search()
+int search(struct Node *bstroot,int key)
 {
-
+        if(bstroot==NULL)
+        {
+                return 0;
+        }
+        else if(key==bstroot->data)
+        {
+                return 1;
+        }
+        else if(key<bstroot->data)
+        {
+                return search(bstroot->left,key);
+        }
+        else if(key>bstroot->data)
+        {
+                return search(bstroot->right,key);
+        }
+        else
+        {
+                return 0;
+        }
 }
 
 void printTree()
 {
 
+}
+
+
+ struct Node* minValueNode(struct Node *leftmostN)
+{
+        while(leftmostN->left!=NULL)
+        {
+                leftmostN=leftmostN->left;
+        }
+        return leftmostN;
 }
