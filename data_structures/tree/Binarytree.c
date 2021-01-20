@@ -14,12 +14,15 @@ void createList();
 void insertNode();
 struct Node *deleteNode(struct Node *bstroot, int key);
 int search(struct Node *bstroot, int key);
-void printTree();
+void printInorder(struct Node *inorderNode);
+void printPreorder();
+void printPostorder();
 struct Node* minValueNode(struct Node* leftmostN);
 
 int main()
 {
         int choice,key1,key2,d;
+        
         struct Node *output;
         
         while (choice != 0)
@@ -29,7 +32,9 @@ int main()
                 printf("\n2. Insert an element from the tree");
                 printf("\n3. Delete an element from the tree");
                 printf("\n4. Search an element");
-                printf("\n5. Display the tree");
+                printf("\n5. Display the Elements in In-Order");
+                printf("\n6. Display the Elements in Pre-Order");
+                printf("\n7. Display the Elements in Post-Order");
                 printf("\n Press 0 to Exit");
                 printf("\nEnter the choice : ");
                 scanf("%d", &choice);
@@ -40,40 +45,103 @@ int main()
                         break;
 
                 case 2:
-                        insertNode();
+                        if(bstroot==NULL)
+                        {
+                                printf("\nCreate a Binary Search tree first, to insert an element .");
+                        }
+                        else        
+                        {     
+                                insertNode();
+                        }
                         break;
 
                 case 3:
-                        printf("\nEnter the number you want to delete : ");
-                        scanf("%d",&key1); 
-                        d=search(bstroot,key1);
-                        if(d==key1)
+                        if(bstroot==NULL)
                         {
-                                deleteNode(bstroot,key1);
-                                printf("\nThe given number(%d) is successfully deleted !",key1);
+                                printf("\nCreate a Binary Search tree first, to delete an element .");
                         }
-                        else
-                        {
-                                printf("\nElement not found !");
+                        else        
+                        {        
+                                printf("\nEnter the number you want to delete : ");
+                                scanf("%d",&key1); 
+                                d=search(bstroot,key1);
+                                if(d==key1)
+                                {
+                                        deleteNode(bstroot,key1);
+                                        printf("\nThe given number(%d) is successfully deleted !",key1);
+                                }
+                                else
+                                {
+                                        printf("\nElement not found !");
+                                }
                         }
                         break;
 
                 case 4:
-                        printf("\nEnter the number you want to search : ");
-                        scanf("%d",&key2);
-                        d=search(bstroot, key2);
-                        if(d==key2)
+                        if(bstroot==NULL)
                         {
-                                printf("\n%d is found successfully !",key2);
-                        }
+                                printf("\nCreate a Binary Search tree first, to search an element .");
+                        }        
                         else
                         {
-                                printf("\nElement not found ");
+                        
+                                printf("\nEnter the number you want to search : ");
+                                scanf("%d",&key2);
+                                d=search(bstroot, key2);
+                                if(d==key2)
+                                {
+                                        printf("\n%d is found successfully !",key2);
+                                }
+                                else
+                                {
+                                        printf("\nElement not found ");
+                                }
                         }
                         break;
 
                 case 5:
-                        printTree();
+                        
+                        if(bstroot==NULL)
+                        {
+                                printf("\nCreate a Binary Search tree first, to print the element .");
+                        }        
+                        else
+                        {
+                                
+                                printf("\nThe elements in In-Order are : ");
+                                printInorder(bstroot);
+                         }
+                        
+                        break;
+
+                case 6:
+                        
+                        if(bstroot==NULL)
+                        {
+                                printf("\nCreate a Binary Search tree first, to print the element .");
+                        }        
+                        else
+                        {
+                                
+                                printf("\nThe elements in Pre-Order are : ");
+                                printPreorder(bstroot);
+                         }
+                        
+                        break;
+
+                case 7:
+                        
+                        if(bstroot==NULL)
+                        {
+                                printf("\nCreate a Binary Search tree first, to print the element .");
+                        }        
+                        else
+                        {
+                                
+                                printf("\nThe elements in Post-Order are : ");
+                                printPostorder(bstroot);
+                         }
+                        
                         break;
 
                 default:
@@ -222,11 +290,25 @@ int search(struct Node *bstroot,int key)
         }
 }
 
-void printTree()
+void printInorder(struct Node *inorderNode)
+{
+        if(inorderNode!=NULL)
+        {
+                printInorder(inorderNode->left);
+                printf("%d -> ",inorderNode->data);
+                printInorder(inorderNode->right);
+        }
+}
+
+void printPreorder()
 {
 
 }
 
+void printPostorder()
+{
+
+}
 
  struct Node* minValueNode(struct Node *leftmostN)
 {
